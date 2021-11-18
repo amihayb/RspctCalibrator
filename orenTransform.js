@@ -140,16 +140,16 @@ function processData(allRows) {
         x: 1, y: 1, z: 1,
        }, 
        xaxis: {
-        nticks: 10,
-        range: [-250, 250],
+        nticks: 15,
+        range: [-350, 350],
       },
        yaxis: {
-        nticks: 10,
-        range: [-250, 250],
+        nticks: 15,
+        range: [-350, 350],
       },
        zaxis: {
-       nticks: 10,
-       range: [-250, 250],
+       nticks: 15,
+       range: [-350, 350],
       }},
      height: 640
     };
