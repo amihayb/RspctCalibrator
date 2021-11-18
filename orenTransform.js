@@ -2,15 +2,51 @@
 
 //const CSV = ".\syntethic hoop 3.csv";
 
+/*let fileHandle;
+butOpenFile.addEventListener('click', async () => {
+  [fileHandle] = await window.showOpenFilePicker();
+  const file = await fileHandle.getFile();
+  const contents = await file.text();
+  textArea.value = contents;
+});*/
+
 const fileSelector = document.getElementById('file-selector');
     fileSelector.addEventListener('change', (event) => {
       const fileList = event
         .target.files;
-      console.log(fileList);
+      //console.log(fileList);
       for (const file of fileList) {
         readFile(file);
       }
     });
+
+
+    const jsonSelector = document.getElementById('json-selector');
+    jsonSelector.addEventListener('change', (event) => {
+      const fileList = event
+        .target.files;
+      console.log(fileList);
+      for (const file of fileList) {
+        readTextFile(file, function(text){
+          //var data = JSON.parse(text);
+          console.log(text);
+      });
+        //readTextFile(file);
+      }
+      function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+    });
+
+    
 
     function readFile(file) {
       // Check if the file is an image.
@@ -97,6 +133,27 @@ function processData(allRows) {
       }
   ];
   //Plotly.newPlot('plot', data);
+  var layout = {
+    scene:{
+      aspectmode: "manual",
+      aspectratio: {
+        x: 1, y: 1, z: 1,
+       }, 
+       xaxis: {
+        nticks: 10,
+        range: [-250, 250],
+      },
+       yaxis: {
+        nticks: 10,
+        range: [-250, 250],
+      },
+       zaxis: {
+       nticks: 10,
+       range: [-250, 250],
+      }},
+     height: 640
+    };
+
   Plotly.newPlot('plot', [{
     type: 'scatter3d',
     mode: 'lines',
@@ -109,9 +166,7 @@ function processData(allRows) {
       color: '#FF8C00',
       reversescale: false
     }
-  }], {
-    height: 640
-  });
+  }], layout);
 }
 
 function makePlotly(x, y1, y2) {
